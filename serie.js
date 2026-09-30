@@ -1,20 +1,20 @@
 /*
 3. (3pts) Crear en el archivo serie.js la clase Serie con:
-a. Atributos: id (number), url (string), name (string), language (string), generes (array de string), image (string).
+a. Atributos: id (number), url (string), name (string), language (string), genres (array de string), image (string).
 b. Constructor. Debe tomar y asignar todos los datos.
 c. Métodos: 
 i. toJsonString(). De instancia. Devuelve un string json que representa al objeto. 
 ii. createFromJsonString(json) De clase. Devuelve una instancia de la clase serie creada con los datos provenientes del parámetro json de tipo string. 
-iii. createHtmlElement(). De instancia. Devuelve un elemento HTML que permita mostrar del documento los datos: name, lenguaje, generes e image.
+iii. createHtmlElement(). De instancia. Devuelve un elemento HTML que permita mostrar del documento los datos: name, lenguaje, genres e image.
 */ 
 
 class Serie{
-    constructor(id, url, name, language, generes, image){
+    constructor(id, url, name, language, genres, image){
         this.id = id;
         this.url = url;
         this.name = name;
         this.language = language;
-        this.generes = generes;
+        this.genres = genres;
         this.image = image;
     }
 
@@ -24,7 +24,7 @@ class Serie{
 
     static createFromJsonString(jsonString){
         const data = JSON.parse(jsonString);
-        return new Serie(data.id, data.url, data.name, data.language, data.generes, data.image);
+        return new Serie(data.id, data.url, data.name, data.language, data.genres, data.image);
     }
 
     createHtmlElement(){
@@ -44,9 +44,9 @@ class Serie{
         languageElement.textContent = "Idioma" + this.language;
         card.appendChild(languageElement);
 
-        const generesElement = document.createElement("p");
-        generesElement.textContent = "Genero: " + this.generes.join(", ");
-        card.appendChild(generesElement);
+        const genresElement = document.createElement("p");
+        genresElement.textContent = "Genero: " + this.genres.join(", ");
+        card.appendChild(genresElement);
 
         return card;
     }
