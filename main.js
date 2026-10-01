@@ -26,17 +26,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (!respuesta.ok) {
                     throw new Error("Error al obtener la serie " + id);
+                    continue;
                 }
 
                 const data = await respuesta.json();
+
+                let urlImagen = "";
+                if (data.image){
+                    urlImagen = data.image.medium
+                }
 
                 const nuevaSerie = new Serie(
                     data.id, 
                     data.url, 
                     data.name, 
                     data.language, 
-                    data.generes, 
-                    data.image.medium
+                    data.genres, 
+                    urlImagen
                 );
 
                 const tarjetaHtml = nuevaSerie.createHtmlElement();
