@@ -1,11 +1,9 @@
 /*
-3. (3pts) Crear en el archivo serie.js la clase Serie con:
-a. Atributos: id (number), url (string), name (string), language (string), genres (array de string), image (string).
-b. Constructor. Debe tomar y asignar todos los datos.
-c. Métodos: 
-i. toJsonString(). De instancia. Devuelve un string json que representa al objeto. 
-ii. createFromJsonString(json) De clase. Devuelve una instancia de la clase serie creada con los datos provenientes del parámetro json de tipo string. 
-iii. createHtmlElement(). De instancia. Devuelve un elemento HTML que permita mostrar del documento los datos: name, lenguaje, genres e image.
+6.(2pts) Modificar el retorno del método createHtmlElement ( ) para que:
+a. Al clickear la imagen, se abre en otra pestaña el link contenido en el atributo url de
+la clase Serie.
+b. Agregar un botón debajo de la información de la serie que posea el texto
+“ guardar ” y llame al método guardarSerie() .
 */ 
 
 class Serie{
@@ -30,10 +28,15 @@ class Serie{
     createHtmlElement(){
         const card = document.createElement("article");
 
+        const enlaceElement = document.createElement("a");
+        enlaceElement.href = this.url;
+        enlaceElement.target = "_blank";
+
         const imgElement = document.createElement("img");
         imgElement.src = this.image;
         imgElement.alt = "Imagen de la serie" + this.name;
         imgElement.style.width = "100%";
+        enlaceElement.appendChild(imgElement);
         card.appendChild(imgElement);
 
         const tituloElement = document.createElement("h3");
@@ -41,13 +44,26 @@ class Serie{
         card.appendChild(tituloElement);
 
         const languageElement = document.createElement("p");
-        languageElement.textContent = "Idioma" + this.language;
+        languageElement.textContent = "Idioma: " + this.language;
         card.appendChild(languageElement);
 
         const genresElement = document.createElement("p");
         genresElement.textContent = "Genero: " + this.genres.join(", ");
         card.appendChild(genresElement);
 
+        const btnGuardar = document.createElement("button");
+        btnGuardar.textContent = "guardar";
+
+        btnGuardar.addEventListener("click", () =>{
+            this.guardarSerie();
+        })
+
+        card.appendChild(btnGuardar);
+
         return card;
+    }
+
+    guardarSerie(){
+        console.log("Serie Guardada: " + this.name);
     }
 }
