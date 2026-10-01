@@ -1,9 +1,6 @@
 /*
-6.(2pts) Modificar el retorno del método createHtmlElement ( ) para que:
-a. Al clickear la imagen, se abre en otra pestaña el link contenido en el atributo url de
-la clase Serie.
-b. Agregar un botón debajo de la información de la serie que posea el texto
-“ guardar ” y llame al método guardarSerie() .
+7.(1pts) Crear el método de clase guardarSerie(serie) de la clase Serie, el cuál guardará la
+serie seleccionada en un array del localstorage.
 */ 
 
 class Serie{
@@ -23,6 +20,19 @@ class Serie{
     static createFromJsonString(jsonString){
         const data = JSON.parse(jsonString);
         return new Serie(data.id, data.url, data.name, data.language, data.genres, data.image);
+    }
+
+    static guardarSerie(serie){
+        let listaGuardadas = [];
+        const datosEnStorage = localStorage.getItem("seriesGuardadas");
+
+        if (datosEnStorage){
+            listaGuardadas = JSON.parse(datosEnStorage);
+        }
+        listaGuardadas.push(serie);
+
+        localStorage.setItem("serieGuardadas:", JSON.stringify(listaGuardadas));
+        console.log("Se Guardo en LocalStorage: "+ serie.name);
     }
 
     createHtmlElement(){
@@ -48,6 +58,10 @@ class Serie{
         card.appendChild(languageElement);
 
         const genresElement = document.createElement("p");
+        let textoGeneros = "Sin Genero";
+        if (this.genres){
+            textoGeneros = this.genres.join(", ");
+        }
         genresElement.textContent = "Genero: " + this.genres.join(", ");
         card.appendChild(genresElement);
 
